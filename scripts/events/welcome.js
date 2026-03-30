@@ -7,7 +7,7 @@ module.exports = {
   config: {
     name: "welcome",
     version: "2.0",
-    author: "Saimx69x",
+    author: "Célestin 👽⚽",
     category: "events"
   },
 
@@ -20,22 +20,18 @@ module.exports = {
     const prefix = getPrefix(threadID);
     const nickNameBot = global.GoatBot.config.nickNameBot;
 
-    // Bot nick set function
     if (addedParticipants.some(user => user.userFbId === api.getCurrentUserID())) {
       if (nickNameBot) {
         try {
           await api.changeNickname(nickNameBot, threadID, api.getCurrentUserID());
         } catch (error) {
-          console.error("❌ Error changing bot nickname:", error);
+          console.error("❌ Erreur changement pseudo bot :", error);
         }
       }
-      // Return early when bot is added
       return;
     }
 
-    // Original welcome code for new users
     const botID = api.getCurrentUserID();
-    
     if (addedParticipants.some(u => u.userFbId === botID)) return;
 
     const threadInfo = await api.getThreadInfo(threadID);
@@ -47,15 +43,20 @@ module.exports = {
       const fullName = user.fullName;
 
       try {
-        
-        const timeStr = new Date().toLocaleString("en-BD", {
-          timeZone: "Asia/Dhaka",
+
+        const timeStr = new Date().toLocaleString("fr-FR", {
           hour: "2-digit", minute: "2-digit", second: "2-digit",
           weekday: "long", year: "numeric", month: "2-digit", day: "2-digit",
-          hour12: true,
+          hour12: false,
         });
 
-    
+        // 🌞🌙 Détection jour / nuit
+        const isDay = hours >= 6 && hours < 18;
+        const greeting = isDay ? "🌞 Bonjour" : "🌙 Bonsoir";
+        const moodLine = isDay
+          ? "⚽ Passe une excellente journée dans le groupe 👽🔥"
+          : "⚽ Passe une bonne nuit dans le groupe 👽🌙";
+
         const apiUrl = `https://xsaim8x-xxx-api.onrender.com/api/welcome?name=${encodeURIComponent(fullName)}&uid=${userId}&threadname=${encodeURIComponent(groupName)}&members=${memberCount}`;
         const tmp = path.join(__dirname, "..", "cache");
         await fs.ensureDir(tmp);
@@ -66,11 +67,18 @@ module.exports = {
 
         await api.sendMessage({
           body:
-            `‎𝐇𝐞𝐥𝐥𝐨 ${fullName}\n` +
-            `𝐖𝐞𝐥𝐜𝐨𝐦𝐞 𝐭𝐨 ${groupName}\n` +
-            `𝐘𝐨𝐮'𝐫𝐞 𝐭𝐡𝐞 ${memberCount} 𝐦𝐞𝐦𝐛𝐞𝐫 𝐨𝐧 𝐭𝐡𝐢𝐬 𝐠𝐫𝐨𝐮𝐩, 𝐩𝐥𝐞𝐚𝐬𝐞 𝐞𝐧𝐣𝐨𝐲 🎉\n` +
-            `━━━━━━━━━━━━━━━━\n` +
-            `📅 ${timeStr}`,
+`🛸═══════⚽〔 🌌 𝐁𝐈𝐄𝐍𝐕𝐄𝐍𝐔𝐄 🌌 〕⚽═══════🛸
+👽 ${greeting} ${fullName}
+⚽ Bienvenue dans ${groupName}
+👽 Tu es le ${memberCount}ᵉ membre ⚽
+
+🛸━━━━━━━━━━━━━━━━━━🛸
+${moodLine}
+👽 Respecte tous les membres ⚽
+🛸━━━━━━━━━━━━━━━━━━🛸
+
+📡 ${timeStr}`,
+          
           attachment: fs.createReadStream(imagePath),
           mentions: [{ tag: fullName, id: userId }]
         }, threadID);
@@ -78,7 +86,7 @@ module.exports = {
         fs.unlinkSync(imagePath);
 
       } catch (err) {
-        console.error("❌ Error sending welcome message:", err);
+        console.error("❌ Erreur envoi message bienvenue :", err);
       }
     }
   }
