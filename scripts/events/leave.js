@@ -16,7 +16,17 @@ module.exports = {
       session4: "soir",
       leaveType1: "a quitté",
       leaveType2: "a été expulsé de",
-      defaultLeaveMessage: "👑 {userName} {type} le groupe {threadName} 🌹"
+      defaultLeaveMessage:
+`࿇ ══━━✥◈✥━━══ ࿇
+
+{userName} {type} le groupe {threadName}.
+
+Un changement vient d’avoir lieu.
+Chaque départ influence le groupe… mais il continue d’avancer.
+
+📡 {time}
+
+࿇ ══━━✥◈✥━━══ ࿇`
     },
     en: {
       session1: "morning",
@@ -25,7 +35,17 @@ module.exports = {
       session4: "evening",
       leaveType1: "left",
       leaveType2: "was kicked from",
-      defaultLeaveMessage: "{userName} {type} the group {threadName}"
+      defaultLeaveMessage:
+`࿇ ══━━✥◈✥━━══ ࿇
+
+{userName} {type} the group {threadName}.
+
+A change has occurred.
+Every departure impacts the group… yet it continues to move forward.
+
+📡 {time}
+
+࿇ ══━━✥◈✥━━══ ࿇`
     }
   },
 
