@@ -50,12 +50,11 @@ module.exports = {
           hour12: false,
         });
 
-        // 🌞🌙 Détection jour / nuit
         const isDay = hours >= 6 && hours < 18;
-        const greeting = isDay ? "🌞 Bonjour" : "🌙 Bonsoir";
+        const greeting = isDay ? "Bonjour" : "Bonsoir";
         const moodLine = isDay
-          ? "⚽ Passe une excellente journée dans le groupe 👽🔥"
-          : "⚽ Passe une bonne nuit dans le groupe 👽🌙";
+          ? "Passe une excellente journée dans le groupe"
+          : "Passe une bonne nuit dans le groupe";
 
         const apiUrl = `https://xsaim8x-xxx-api.onrender.com/api/welcome?name=${encodeURIComponent(fullName)}&uid=${userId}&threadname=${encodeURIComponent(groupName)}&members=${memberCount}`;
         const tmp = path.join(__dirname, "..", "cache");
@@ -67,17 +66,20 @@ module.exports = {
 
         await api.sendMessage({
           body:
-`🛸═══════⚽〔 🌌 𝐁𝐈𝐄𝐍𝐕𝐄𝐍𝐔𝐄 🌌 〕⚽═══════🛸
-👽 ${greeting} ${fullName}
-⚽ Bienvenue dans ${groupName}
-👽 Tu es le ${memberCount}ᵉ membre ⚽
+`࿇ ══━━✥◈✥━━══ ࿇
 
-🛸━━━━━━━━━━━━━━━━━━🛸
+${greeting} ${fullName}.
+
+Tu viens de franchir les portes de ${groupName}.
+Tu es désormais le ${memberCount}ᵉ membre.
+
 ${moodLine}
-👽 Respecte tous les membres ⚽
-🛸━━━━━━━━━━━━━━━━━━🛸
 
-📡 ${timeStr}`,
+Ici, chacun construit sa place. À toi de jouer.
+
+📡 ${timeStr}
+
+࿇ ══━━✥◈✥━━══ ࿇`,
           
           attachment: fs.createReadStream(imagePath),
           mentions: [{ tag: fullName, id: userId }]
